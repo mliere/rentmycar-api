@@ -1,39 +1,22 @@
 package local.rentmycar.api.data;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="CAR")
+@ToString
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="CAR_ID")
+    @Getter
     private long id;
 
     @Column(name="LICENSE_PLATE_NUMBER")
+    @Getter @Setter
     private String licensePlateNumber;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getLicensePlateNumber() {
-        return licensePlateNumber;
-    }
-
-    public void setLicensePlateNumber(String licensePlateNumber) {
-        this.licensePlateNumber = licensePlateNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", licensePlateNumber='" + licensePlateNumber + '\'' +
-                '}';
-    }
 }
