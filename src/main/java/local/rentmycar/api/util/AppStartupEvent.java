@@ -1,7 +1,7 @@
 package local.rentmycar.api.util;
 
-import local.rentmycar.api.data.Car;
-import local.rentmycar.api.data.CarRepository;
+import local.rentmycar.api.domain.Car;
+import local.rentmycar.api.controller.CarRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;

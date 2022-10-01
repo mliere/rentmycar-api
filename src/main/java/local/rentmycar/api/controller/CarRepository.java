@@ -1,5 +1,6 @@
-package local.rentmycar.api.data;
+package local.rentmycar.api.controller;
 
+import local.rentmycar.api.domain.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

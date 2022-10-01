@@ -1,4 +1,4 @@
-package local.rentmycar.api.data;
+package local.rentmycar.api.domain;
 
 import lombok.Getter;
 import lombok.Setter;
