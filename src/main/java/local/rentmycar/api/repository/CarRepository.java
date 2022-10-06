@@ -1,4 +1,4 @@
-package local.rentmycar.api.controller;
+package local.rentmycar.api.repository;
 
 import local.rentmycar.api.domain.Car;
 import org.springframework.data.jpa.repository.JpaRepository;

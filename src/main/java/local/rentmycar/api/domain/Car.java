@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="CAR")
@@ -17,6 +18,7 @@ public class Car {
     private long id;
 
     @Column(name="LICENSE_PLATE_NUMBER")
+    @NotEmpty(message = "License plate number is required")
     @Getter @Setter
     private String licensePlateNumber;
 }
