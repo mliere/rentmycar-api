@@ -1,11 +1,9 @@
 package local.rentmycar.api.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="CAR")
@@ -14,11 +12,11 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="CAR_ID")
-    @Getter
+    @Getter @Setter
     private long id;
 
     @Column(name="LICENSE_PLATE_NUMBER")
-    @NotEmpty(message = "License plate number is required")
     @Getter @Setter
+    @NotBlank(message = "License plate number is mandatory")
     private String licensePlateNumber;
 }

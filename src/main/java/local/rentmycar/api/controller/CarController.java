@@ -5,6 +5,7 @@ import local.rentmycar.api.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Validated
 @RequestMapping("cars")
 public class CarController {
     private final CarRepository carRepository;
@@ -43,9 +45,11 @@ public class CarController {
 
     @PutMapping("{id}")
     public ResponseEntity<Car> update(@PathVariable Long id, @Valid @RequestBody Car changedCar) {
-        Optional<Car> found = carRepository.findById(id);
+        Boolean found = carRepository.existsById(id);
 
-        if (found.isPresent()) {
+        if (found) {
+            carRepository.save(changedCar);
+            return ResponseEntity.ok(changedCar);
         }
         return ResponseEntity.notFound().build();
     }
@@ -60,7 +64,7 @@ public class CarController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         if (!carRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
