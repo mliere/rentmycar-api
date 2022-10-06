@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("car")
+@RequestMapping("cars")
 public class CarController {
     private final CarRepository carRepository;
 
@@ -35,10 +35,19 @@ public class CarController {
     public ResponseEntity<Optional<Car>> getById(@PathVariable Long id) {
         Optional<Car> found = carRepository.findById(id);
 
-        if (!found.isPresent()) {
-            return ResponseEntity.noContent().build();
+        if (found.isPresent()) {
+            return ResponseEntity.ok(found);
         }
-        return ResponseEntity.ok(found);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Car> update(@PathVariable Long id, @Valid @RequestBody Car changedCar) {
+        Optional<Car> found = carRepository.findById(id);
+
+        if (found.isPresent()) {
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
