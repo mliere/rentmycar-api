@@ -6,9 +6,11 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Entity @Table(name="RENTER")
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("RENTER")
 @ToString
-public class Renter {
+public class Renter extends User{
     @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")
     @Getter @Setter
     private long id;

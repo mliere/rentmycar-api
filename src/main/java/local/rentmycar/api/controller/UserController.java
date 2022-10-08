@@ -1,6 +1,6 @@
 package local.rentmycar.api.controller;
 
-import local.rentmycar.api.repository.UserRepository;
+import local.rentmycar.api.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final OwnerRepository ownerRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(OwnerRepository ownerRepository) {
+        this.ownerRepository = ownerRepository;
     }
 }

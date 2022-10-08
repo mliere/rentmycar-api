@@ -7,9 +7,11 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity @Table(name="OWNER")
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("OWNER")
 @ToString
-public class Owner {
+public class Owner extends User {
     @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")
     @Getter @Setter
     private long id;
