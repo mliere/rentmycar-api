@@ -3,20 +3,18 @@ package local.rentmycar.api.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-@Entity
-@Table(name="API_USER")
+@Entity @Table(name="API_USER")
+@DynamicUpdate(true)
 @ToString
 public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="USER_ID")
-    @Getter
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")
+    @Getter @Setter
     private long id;
 
     @Column(name="FIRST_NAME")
@@ -48,4 +46,8 @@ public class User {
     @NotEmpty(message = "Phone number is required")
     @Getter @Setter
     private String phoneNumber;
+
+    @Lob @Column(name="PROFILE_PICTURE")
+    @Getter @Setter
+    private byte[] profilePicture;
 }

@@ -1,4 +1,4 @@
-package local.rentmycar.api.util;
+package local.rentmycar.api;
 
 import local.rentmycar.api.domain.Car;
 import local.rentmycar.api.domain.User;

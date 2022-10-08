@@ -2,6 +2,7 @@ package local.rentmycar.api.controller;
 
 import local.rentmycar.api.domain.Car;
 import local.rentmycar.api.repository.CarRepository;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @Validated
+@Log
 @RequestMapping("cars")
 public class CarController {
     private final CarRepository carRepository;
@@ -25,6 +27,7 @@ public class CarController {
 
     @GetMapping()
     public ResponseEntity<List<Car>> getAll() {
+        log.info("Received getAll request");
         List<Car> found = carRepository.findAll();
 
         if (found.isEmpty()) {
