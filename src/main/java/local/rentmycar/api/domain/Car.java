@@ -54,5 +54,6 @@ public class Car {
     @ManyToOne(optional = false)
     @JoinColumn(name = "OWNER_ID", nullable = false,
             referencedColumnName = "ID")
+    @Getter @Setter
     private Owner owner;
 }

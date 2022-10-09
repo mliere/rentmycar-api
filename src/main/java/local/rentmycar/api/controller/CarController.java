@@ -1,5 +1,6 @@
 package local.rentmycar.api.controller;
 
+import local.rentmycar.api.domain.Car;
 import local.rentmycar.api.dto.CarDto;
 import local.rentmycar.api.service.CarService;
 import lombok.extern.java.Log;
@@ -10,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log
@@ -31,26 +33,29 @@ public class CarController {
     @GetMapping()
     public ResponseEntity<List<CarDto>> getAllCars() {
         log.info("Received getAll request");
-        List<CarDto> found = carService.getAllCars()
+        List<CarDto> result = carService.getAllCars()
                 .stream()
                 .map(car -> modelMapper.map(car, CarDto.class))
                 .collect(Collectors.toList());
 
-        if (found.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(found);
+        if (result.isEmpty()) { return ResponseEntity.noContent().build(); }
+
+        return ResponseEntity.ok(result);
     }
 
-    /*
     @GetMapping("{id}")
-    public ResponseEntity<Optional<Car>> getById(@PathVariable Long id) {
-        Optional<Car> found = carRepository.findById(id);
+    public ResponseEntity<CarDto> getCarById(@PathVariable Long id) {
+        Optional<Car> car = carService.getCarById(id);
 
-        if (found.isPresent()) {
-            return ResponseEntity.ok(found);
+        if (car.isPresent()) {
+            return (ResponseEntity<CarDto>) ResponseEntity.ok(modelMapper.map(car.get(), CarDto.class));
         }
+
         return ResponseEntity.noContent().build();
+    }
+}
+
+/*
     }
 
     @PutMapping("{id}")
@@ -82,5 +87,6 @@ public class CarController {
         carRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
-     */
+
 }
+     */
