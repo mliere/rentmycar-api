@@ -1,34 +1,40 @@
 package local.rentmycar.api.controller;
 
-import local.rentmycar.api.domain.Car;
-import local.rentmycar.api.repository.CarRepository;
+import local.rentmycar.api.dto.CarDto;
+import local.rentmycar.api.service.CarService;
 import lombok.extern.java.Log;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Log
 @RestController
 @Validated
-@Log
 @RequestMapping("cars")
 public class CarController {
-    private final CarRepository carRepository;
 
     @Autowired
-    public CarController(CarRepository carRepository) {
-        this.carRepository = carRepository;
+    private ModelMapper modelMapper;
+
+    private final CarService carService;
+
+    @Autowired
+    public CarController(CarService carService) {
+        this.carService = carService;
     }
 
     @GetMapping()
-    public ResponseEntity<List<Car>> getAll() {
+    public ResponseEntity<List<CarDto>> getAllCars() {
         log.info("Received getAll request");
-        List<Car> found = carRepository.findAll();
+        List<CarDto> found = carService.getAllCars()
+                .stream()
+                .map(car -> modelMapper.map(car, CarDto.class))
+                .collect(Collectors.toList());
 
         if (found.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -36,6 +42,7 @@ public class CarController {
         return ResponseEntity.ok(found);
     }
 
+    /*
     @GetMapping("{id}")
     public ResponseEntity<Optional<Car>> getById(@PathVariable Long id) {
         Optional<Car> found = carRepository.findById(id);
@@ -75,4 +82,5 @@ public class CarController {
         carRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
+     */
 }

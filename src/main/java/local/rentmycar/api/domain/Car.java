@@ -37,6 +37,10 @@ public class Car {
     @Getter @Setter
     private String model;
 
+    @Column(name="LISTED")
+    @Getter @Setter
+    private Boolean listed;
+
     @Column(name="MANUFACTURING_DATE")
     @Getter @Setter
     private Timestamp manufacturingDate;
