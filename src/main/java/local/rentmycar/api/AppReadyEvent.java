@@ -16,7 +16,9 @@ public class AppReadyEvent implements ApplicationListener<ApplicationReadyEvent>
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
+        /*
         Iterable<User> users = ownerRepository.findAll();
         users.forEach(System.out::println);
+         */
     }
 }
