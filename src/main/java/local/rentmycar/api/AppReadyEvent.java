@@ -26,7 +26,7 @@ public class AppReadyEvent implements ApplicationListener<ApplicationReadyEvent>
         users.forEach(System.out::println);
          */
 
-        Owner owner = new Owner();
+        /*Owner owner = new Owner();
         owner.setPhoneNumber("123456");
         ownerRepository.save(owner);
 
@@ -34,5 +34,6 @@ public class AppReadyEvent implements ApplicationListener<ApplicationReadyEvent>
         car.setLicensePlateNumber("1234-aa");
         car.setOwner(owner);
         carRepository.save(car);
+         */
     }
 }
