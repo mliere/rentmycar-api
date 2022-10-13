@@ -51,8 +51,8 @@ public class Car {
             inverseJoinColumns = @JoinColumn(name = "FUEL_ID", referencedColumnName = "ID"))
     private List<FuelType> fuelTypeList;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "OWNER_ID", nullable = false,
+    @ManyToOne//(optional = false)
+    @JoinColumn(name = "OWNER_ID", //nullable = false,
             referencedColumnName = "ID")
     @Getter @Setter
     private Owner owner;

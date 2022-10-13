@@ -10,7 +10,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.Assert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
