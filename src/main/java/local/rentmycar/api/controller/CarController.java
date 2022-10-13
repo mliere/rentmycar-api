@@ -1,7 +1,7 @@
 package local.rentmycar.api.controller;
 
 import local.rentmycar.api.domain.Car;
-import local.rentmycar.api.dto.CarDto;
+import local.rentmycar.api.controller.dto.CarDto;
 import local.rentmycar.api.service.CarService;
 import lombok.extern.java.Log;
 import org.modelmapper.ModelMapper;

@@ -46,7 +46,7 @@ public class Car {
     @Getter @Setter
     private Timestamp manufacturingDate;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "CAR_FUEL_TYPE",
             joinColumns = @JoinColumn(name = "CAR_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "FUEL_ID", referencedColumnName = "ID"))
