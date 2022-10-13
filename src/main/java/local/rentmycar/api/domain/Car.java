@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 @Entity @Table(name="CAR")
 @DynamicUpdate(true)
@@ -49,7 +50,7 @@ public class Car {
     @JoinTable(name = "CAR_FUEL_TYPE",
             joinColumns = @JoinColumn(name = "CAR_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "FUEL_ID", referencedColumnName = "ID"))
-    private List<FuelType> fuelTypeList;
+    private Set<FuelType> fuelTypeList;
 
     @ManyToOne//(optional = false)
     @JoinColumn(name = "OWNER_ID", //nullable = false,

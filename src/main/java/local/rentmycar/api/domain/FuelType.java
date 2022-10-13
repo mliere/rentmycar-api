@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity @Table(name="FUEL_TYPE")
 @ToString
@@ -20,5 +21,5 @@ public class FuelType {
 
     @ManyToMany(mappedBy = "fuelTypeList")
     @Getter @Setter
-    private List<Car> car;
+    private Set<Car> car;
 }
