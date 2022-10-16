@@ -2,12 +2,9 @@ package local.rentmycar.api.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 
 @MappedSuperclass @Table(name="API_USER")
 @DiscriminatorColumn(name = "ROLE", discriminatorType = DiscriminatorType.STRING)
@@ -30,7 +27,6 @@ public abstract class User {
     private String lastName;
 
     @Column(name="EMAIL_ADDRESS")
-    @Email
     @Getter @Setter
     private String mailAddress;
 
@@ -47,7 +43,6 @@ public abstract class User {
     private String state;
 
     @Column(name="PHONE_NUMBER")
-    @NotEmpty(message = "Phone number is required")
     @Getter @Setter
     private String phoneNumber;
 

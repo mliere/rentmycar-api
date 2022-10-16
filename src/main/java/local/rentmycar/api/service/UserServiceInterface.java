@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface UserServiceInterface {
     List<User> getAll();
+    Boolean existsById(long id);
 
     Optional<User> getById(long id);
 

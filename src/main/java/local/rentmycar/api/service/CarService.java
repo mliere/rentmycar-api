@@ -23,6 +23,11 @@ public class CarService implements CarServiceInterface {
     }
 
     @Override
+    public Boolean existsById(long id) {
+        return carRepository.existsById(id);
+    }
+
+    @Override
     public Optional<Car> getById(long id) {
         return carRepository.findById(id);
     }

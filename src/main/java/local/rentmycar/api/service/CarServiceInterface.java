@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface CarServiceInterface {
     List<Car> getAll();
+    Boolean existsById(long id);
 
     Optional<Car> getById(long id);
 

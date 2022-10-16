@@ -38,6 +38,11 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
+    public Boolean existsById(long id) {
+        return renterRepository.existsById(id) ? true : ownerRepository.existsById(id);
+    }
+
+    @Override
     public Optional<User> getById(long id) {
 
         Optional<Renter> renter = renterRepository.findById(id);
@@ -57,7 +62,7 @@ public class UserService implements UserServiceInterface {
         switch (user.getClass().getSimpleName()) {
             case "RENTER" -> renterRepository.save((Renter) user);
             case "OWNER" -> ownerRepository.save((Owner) user);
-            default -> throw new IllegalArgumentException("Invalid role");
+            default -> throw new IllegalArgumentException("Invalid role" + user.getClass().getSimpleName());
         }
         return user;
     }
@@ -70,7 +75,7 @@ public class UserService implements UserServiceInterface {
             case "OWNER":
                 return ownerRepository.save((Owner) changedUser);
             default:
-                throw new IllegalArgumentException("Invalid role");
+                throw new IllegalArgumentException("Invalid role" + changedUser.getClass().getSimpleName());
         }
     }
 

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface ReservationServiceInterface {
     List<Reservation> getAll();
+    Boolean existsById(long id);
 
     Optional<Reservation> getById(long id);
 
