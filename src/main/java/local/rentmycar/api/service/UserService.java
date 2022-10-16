@@ -1,6 +1,7 @@
 package local.rentmycar.api.service;
 
-import local.rentmycar.api.domain.Car;
+import local.rentmycar.api.domain.Owner;
+import local.rentmycar.api.domain.Renter;
 import local.rentmycar.api.domain.User;
 import local.rentmycar.api.repository.OwnerRepository;
 import local.rentmycar.api.repository.RenterRepository;
@@ -38,8 +39,19 @@ public class UserService implements UserServiceInterface{
     }
 
     @Override
-    public User create(User car) {
-        return null;
+    public User create(User user) {
+        // determine which kind of user using role attribute which is DB discriminator
+        switch (user.getRole()) {
+            case "RENTER":
+                renterRepository.save((Renter) user);
+                break;
+            case "OWNER":
+                ownerRepository.save((Owner) user);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid role");
+        }
+        return user;
     }
 
     @Override

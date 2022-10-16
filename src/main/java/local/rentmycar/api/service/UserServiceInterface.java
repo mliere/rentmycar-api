@@ -10,7 +10,7 @@ public interface UserServiceInterface {
 
     Optional<User> getById(long id);
 
-    User create(User car);
+    User create(User user);
 
     User update(long id, User changedUser);
 
