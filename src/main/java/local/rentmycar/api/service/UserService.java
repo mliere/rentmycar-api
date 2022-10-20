@@ -5,6 +5,7 @@ import local.rentmycar.api.domain.Renter;
 import local.rentmycar.api.domain.User;
 import local.rentmycar.api.repository.OwnerRepository;
 import local.rentmycar.api.repository.RenterRepository;
+import lombok.extern.java.Log;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+@Log
 @Service
 public class UserService implements UserServiceInterface {
     private final OwnerRepository ownerRepository;
@@ -59,24 +61,22 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public User create(User user) {
-        switch (user.getClass().getSimpleName()) {
-            case "RENTER" -> renterRepository.save((Renter) user);
-            case "OWNER" -> ownerRepository.save((Owner) user);
-            default -> throw new IllegalArgumentException("Invalid role" + user.getClass().getSimpleName());
+        switch (user.getRole()) {
+            case "renter" -> renterRepository.save(modelMapper.map(user, Renter.class));
+            case "owner" -> ownerRepository.save(modelMapper.map(user, Owner.class));
+            default -> throw new IllegalArgumentException("Invalid role" + user.getRole());
         }
         return user;
     }
 
     @Override
     public User update(long id, User changedUser) {
-        switch (changedUser.getClass().getSimpleName()) {
-            case "RENTER":
-                return renterRepository.save((Renter) changedUser);
-            case "OWNER":
-                return ownerRepository.save((Owner) changedUser);
-            default:
-                throw new IllegalArgumentException("Invalid role" + changedUser.getClass().getSimpleName());
+        switch (changedUser.getRole()) {
+            case "renter" -> renterRepository.save(modelMapper.map(changedUser, Renter.class));
+            case "owner" -> ownerRepository.save(modelMapper.map(changedUser, Owner.class));
+            default -> throw new IllegalArgumentException("Invalid role" + changedUser.getRole());
         }
+        return changedUser;
     }
 
     @Override

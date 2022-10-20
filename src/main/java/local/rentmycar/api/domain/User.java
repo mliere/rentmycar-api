@@ -9,7 +9,7 @@ import javax.persistence.*;
 @MappedSuperclass @Table(name="API_USER")
 @DiscriminatorColumn(name = "ROLE", discriminatorType = DiscriminatorType.STRING)
 @DynamicUpdate(true)
-public abstract class User {
+public /*abstract*/ class User {
     @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")
     @Getter @Setter
     private long id;
