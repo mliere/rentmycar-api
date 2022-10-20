@@ -18,7 +18,6 @@ public class Car {
 
     @Column(name="LICENSE_PLATE_NUMBER", unique = true)
     @Getter @Setter
-    @NotBlank(message = "License plate number is mandatory")
     private String licensePlateNumber;
 
     @Lob @Column(name="PICTURE")
@@ -56,4 +55,32 @@ public class Car {
             referencedColumnName = "ID")
     @Getter @Setter
     private Owner owner;
+
+    @Column(name = "PRICE_CAR")
+    @Getter @Setter
+    private Double price;
+
+    @Column(name = "CURRENT_VALUE")
+    @Getter @Setter
+    private Double currentValue;
+
+    @Column(name = "TAX_RATE")
+    @Getter @Setter
+    private int taxRate;
+
+    @Column(name = "INSURANCE")
+    @Getter @Setter
+    private Double insurance;
+
+    @Column(name = "MILEAGE")
+    @Getter @Setter
+    private Double mileage;
+
+    @Column(name = "MAINTENANCE")
+    @Getter @Setter
+    private Double maintenance;
+
+
+
+
 }
