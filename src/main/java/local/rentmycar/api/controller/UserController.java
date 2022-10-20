@@ -45,11 +45,6 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) {
         Optional<Object> user = Optional.ofNullable(userService.getById(id));
-
-        if (user.isPresent()) {
-            return (ResponseEntity<UserDto>) ResponseEntity.ok(modelMapper.map(user.get(), UserDto.class));
-        }
-
-        return ResponseEntity.noContent().build();
+        return user.map(o -> (ResponseEntity<UserDto>) ResponseEntity.ok(modelMapper.map(o, UserDto.class))).orElseGet(() -> ResponseEntity.noContent().build());
     }
 }

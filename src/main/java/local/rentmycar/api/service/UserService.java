@@ -39,7 +39,7 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public Boolean existsById(long id) {
-        return renterRepository.existsById(id) ? true : ownerRepository.existsById(id);
+        return renterRepository.existsById(id) || ownerRepository.existsById(id);
     }
 
     @Override
