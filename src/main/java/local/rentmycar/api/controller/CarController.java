@@ -3,6 +3,7 @@ package local.rentmycar.api.controller;
 import local.rentmycar.api.domain.Car;
 import local.rentmycar.api.controller.dto.CarDto;
 import local.rentmycar.api.service.CarService;
+import local.rentmycar.api.service.CarServiceInterface;
 import lombok.extern.java.Log;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,10 @@ public class CarController {
     @Autowired
     private ModelMapper modelMapper;
 
-    private final CarService carService;
+    private final CarServiceInterface carService;
 
     @Autowired
-    public CarController(CarService carService) {
+    public CarController(CarServiceInterface carService) {
         this.carService = carService;
     }
 

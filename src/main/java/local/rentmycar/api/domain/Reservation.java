@@ -13,15 +13,21 @@ public class Reservation {
     @Getter @Setter
     private long id;
 
-    @OneToOne(optional = false) @JoinColumn(name = "id", referencedColumnName = "id")
+    @ManyToOne//(optional = false)
+    @JoinColumn(name = "CAR_ID", //nullable = false,
+            referencedColumnName = "ID")
     private Car car;
 
-    @OneToOne(optional = false) @JoinColumn(name = "id", referencedColumnName = "id")
+    @ManyToOne//(optional = false)
+    @JoinColumn(name = "RENTER_ID", //nullable = false,
+            referencedColumnName = "ID")
     private Renter renter;
 
-    @OneToOne(optional = false) @JoinColumn(name = "id", referencedColumnName = "id")
+    @OneToOne//(optional = false)
+    @JoinColumn(name = "TIMESLOT_ID", //nullable = false,
+            referencedColumnName = "ID")
     private Timeslot timeslot;
 
-    @OneToOne @JoinColumn(name = "id", referencedColumnName = "id")
+    @OneToOne @JoinColumn(name = "RESERVATION_ID", referencedColumnName = "ID")
     private Rating rating;
 }
