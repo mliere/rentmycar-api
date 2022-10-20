@@ -26,21 +26,6 @@ public class ReservationControllerIntegrationTests {
 
     HttpHeaders headers = new HttpHeaders();
 
-    @Test
-    public void getAllCarsEmptyResult() throws JSONException {
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/cars"),
-                HttpMethod.GET, entity, String.class);
-
-        String expected = null;
-
-        JSONAssert.assertEquals(expected, response.getBody(), false);
-        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-
-    }
-
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
     }
