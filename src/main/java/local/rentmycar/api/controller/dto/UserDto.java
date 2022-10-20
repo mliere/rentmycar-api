@@ -1,8 +1,6 @@
 package local.rentmycar.api.controller.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -19,7 +17,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
 
-    @Email
+    @Email(message = "mailAddress is invalid")
     private String mailAddress;
 
     private String address;

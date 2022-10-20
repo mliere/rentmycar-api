@@ -16,4 +16,8 @@ public class Rating {
     @Column(name="RATING")
     @Getter @Setter
     private int rating;
+
+    public Rating(int rating) {
+        this.rating = rating;
+    }
 }

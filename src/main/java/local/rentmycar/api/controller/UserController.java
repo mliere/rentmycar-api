@@ -52,7 +52,10 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> create(@Valid @RequestBody UserDto newUser) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto newUser) {
+
+        //log.info("entry of method: " + new Object() {}.getClass().getEnclosingMethod().getName());
+
             User user = userService.create(modelMapper.map(newUser, User.class));
             return new ResponseEntity<>(modelMapper.map(user, UserDto.class), HttpStatus.CREATED);
         }

@@ -1,5 +1,6 @@
 package local.rentmycar.api.service;
 
+import local.rentmycar.api.controller.dto.ReservationDto;
 import local.rentmycar.api.domain.Reservation;
 
 import java.util.List;
@@ -11,9 +12,9 @@ public interface ReservationServiceInterface {
 
     Optional<Reservation> getById(long id);
 
-    Reservation create(Reservation reservation);
+    Reservation create(ReservationDto reservation);
 
-    Reservation update(long id, Reservation changedReservation);
+    //Reservation update(long id, Reservation changedReservation);
 
     void delete(long id);
 }
