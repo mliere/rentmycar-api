@@ -1,6 +1,8 @@
 package local.rentmycar.api.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -9,6 +11,7 @@ import javax.persistence.*;
 @MappedSuperclass @Table(name="API_USER")
 @DiscriminatorColumn(name = "ROLE", discriminatorType = DiscriminatorType.STRING)
 @DynamicUpdate(true)
+@AllArgsConstructor @NoArgsConstructor
 public /*abstract*/ class User {
     @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")
     @Getter @Setter

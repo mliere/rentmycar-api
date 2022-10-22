@@ -37,7 +37,6 @@ public class CarControllerIntegrationTests {
 
     @BeforeEach
     public void beforeEach() {
-
         // delete all car entries to ensure state is repeatable for each test
         List<Car> cars = carService.getAll();
         for (Car car: cars) carService.delete(car.getId());
@@ -48,22 +47,13 @@ public class CarControllerIntegrationTests {
 
     @Test
     public void post_Car_ExpectCarDtoResultBody() throws JSONException {
-
         // arrange
-
         // set HTTP headers
         headers.add("accept","");
         headers.add("Content-Type","application/json");
 
         // build JSON body
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("id",0);
-        requestBody.put("distanceDriven", "12324");
-        requestBody.put("roadWorthinessExpirationDate", "2022-10-20T13:08:08.931Z");
-        requestBody.put("model", "Opel Vectra");
-        requestBody.put("listed", true);
-        requestBody.put("manufacturingDate", "2022-10-20T13:08:08.931Z");
-        requestBody.put("licensePlateNumber", "123-aV-gg");
+        JSONObject requestBody = constructCarPostRequestBody();
 
         String expected = "123-aV-gg";
 
@@ -78,6 +68,30 @@ public class CarControllerIntegrationTests {
 
         // assert
         Assert.hasText(expected, response.getBody());
+    }
+
+    @Test
+    public void post_Car_ExpectHttpCreated() throws JSONException {
+        // arrange
+        // set HTTP headers
+        headers.add("accept","");
+        headers.add("Content-Type","application/json");
+
+        // build JSON body
+        JSONObject requestBody = constructCarPostRequestBody();
+
+        String expected = "123-aV-gg";
+
+        // assemble HTTP entity
+        HttpEntity<String> entity = new HttpEntity<>(requestBody.toString(), headers);
+
+        // act
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/cars"),
+                HttpMethod.POST, entity, String.class
+        );
+
+        // assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
     @Test
@@ -110,5 +124,17 @@ public class CarControllerIntegrationTests {
 
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
+    }
+
+    private static JSONObject constructCarPostRequestBody() throws JSONException {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("id",0);
+        requestBody.put("distanceDriven", "12324");
+        requestBody.put("roadWorthinessExpirationDate", "2022-10-20T13:08:08.931Z");
+        requestBody.put("model", "Opel Vectra");
+        requestBody.put("listed", true);
+        requestBody.put("manufacturingDate", "2022-10-20T13:08:08.931Z");
+        requestBody.put("licensePlateNumber", "123-aV-gg");
+        return requestBody;
     }
 }
