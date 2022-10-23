@@ -60,7 +60,7 @@ public class ReservationService implements ReservationServiceInterface {
         Timeslot timeslot = timeslotRepository.save(modelMapper.map(reservationDto, Timeslot.class));
         Rating rating = ratingRepository.save(new Rating(reservationDto.getRating()));
 
-        Reservation reservation = new Reservation(0,car.get(), renter.get(),timeslot,rating);
+        Reservation reservation = new Reservation(0,car.get(), renter.get(),timeslot,rating,ReservationStatus.PENDING);
 
         return reservationRepository.save(reservation);
     }
