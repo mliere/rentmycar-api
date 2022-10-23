@@ -32,4 +32,8 @@ public class Reservation {
     @OneToOne @JoinColumn(name = "RESERVATION_ID", referencedColumnName = "ID")
     @Getter @Setter
     private Rating rating;
+
+    @Column(name="RESERVATION_STATUS")
+    @Getter @Setter
+    private ReservationStatus reservationStatus;
 }
