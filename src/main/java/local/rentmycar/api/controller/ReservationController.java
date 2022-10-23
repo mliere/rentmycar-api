@@ -1,10 +1,7 @@
 package local.rentmycar.api.controller;
 
-import local.rentmycar.api.controller.dto.CarDto;
 import local.rentmycar.api.controller.dto.ReservationDto;
-import local.rentmycar.api.domain.Car;
 import local.rentmycar.api.domain.Reservation;
-import local.rentmycar.api.service.ReservationService;
 import local.rentmycar.api.service.ReservationServiceInterface;
 import lombok.extern.java.Log;
 import org.modelmapper.ModelMapper;
@@ -48,7 +45,7 @@ public class ReservationController {
     @GetMapping("{id}")
     public ResponseEntity<ReservationDto> getById(@PathVariable Long id) {
         Optional<Reservation> reservation = reservationService.getById(id);
-        return reservation.map(value -> (ResponseEntity<ReservationDto>) ResponseEntity.ok(modelMapper.map(value, ReservationDto.class)))
+        return reservation.map(value -> ResponseEntity.ok(modelMapper.map(value, ReservationDto.class)))
                 .orElseGet(() -> ResponseEntity.noContent().build());
     }
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("CommentedOutCode")
 @Log
 @Service
 public class ReservationService implements ReservationServiceInterface {

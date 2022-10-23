@@ -1,13 +1,8 @@
 package local.rentmycar.api.controller.dto;
 
-import local.rentmycar.api.domain.Car;
-import local.rentmycar.api.domain.Rating;
-import local.rentmycar.api.domain.Renter;
-import local.rentmycar.api.domain.Timeslot;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 

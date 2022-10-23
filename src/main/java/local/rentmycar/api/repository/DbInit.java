@@ -2,7 +2,6 @@ package local.rentmycar.api.repository;
 
 import local.rentmycar.api.domain.FuelType;
 import lombok.extern.java.Log;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

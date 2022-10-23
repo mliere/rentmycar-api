@@ -1,9 +1,6 @@
 package local.rentmycar.api.controller;
 
-import local.rentmycar.api.controller.dto.CarDto;
 import local.rentmycar.api.controller.dto.UserDto;
-import local.rentmycar.api.domain.Car;
-import local.rentmycar.api.domain.Owner;
 import local.rentmycar.api.domain.User;
 import local.rentmycar.api.service.UserService;
 import lombok.extern.java.Log;
@@ -48,7 +45,7 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) {
         Optional<Object> user = Optional.ofNullable(userService.getById(id));
-        return user.map(o -> (ResponseEntity<UserDto>) ResponseEntity.ok(modelMapper.map(o, UserDto.class))).orElseGet(() -> ResponseEntity.noContent().build());
+        return user.map(o -> ResponseEntity.ok(modelMapper.map(o, UserDto.class))).orElseGet(() -> ResponseEntity.noContent().build());
     }
 
     @PostMapping

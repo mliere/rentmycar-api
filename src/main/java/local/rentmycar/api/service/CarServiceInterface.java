@@ -13,6 +13,7 @@ public interface CarServiceInterface {
 
     Car create(Car car);
 
+    @SuppressWarnings("UnusedReturnValue")
     Car update(long id, Car changedCar);
 
     void delete(long id);

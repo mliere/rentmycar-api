@@ -42,9 +42,10 @@ public class CarControllerIntegrationTests {
         for (Car car: cars) carService.delete(car.getId());
 
     }
-    TestRestTemplate restTemplate = new TestRestTemplate();
-    HttpHeaders headers = new HttpHeaders();
+    final TestRestTemplate restTemplate = new TestRestTemplate();
+    final HttpHeaders headers = new HttpHeaders();
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void post_Car_ExpectCarDtoResultBody() throws JSONException {
         // arrange
@@ -62,7 +63,7 @@ public class CarControllerIntegrationTests {
 
         // act
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/cars"),
+                createURLWithPort(),
                 HttpMethod.POST, entity, String.class
         );
 
@@ -87,7 +88,7 @@ public class CarControllerIntegrationTests {
 
         // act
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/cars"),
+                createURLWithPort(),
                 HttpMethod.POST, entity, String.class
         );
 
@@ -102,28 +103,28 @@ public class CarControllerIntegrationTests {
 
         // act
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/cars"),
+                createURLWithPort(),
                 HttpMethod.GET, entity, String.class);
 
         // assert
-        JSONAssert.assertEquals(expected, response.getBody(), false);
+        JSONAssert.assertEquals(null, response.getBody(), false);
     }
     @Test
-    public void get_AllCars_ExpectHttpNoContent() throws JSONException {
+    public void get_AllCars_ExpectHttpNoContent() {
         // arrange
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
         // act
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/cars"),
+                createURLWithPort(),
                 HttpMethod.GET, entity, String.class);
 
         // assert
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 
-    private String createURLWithPort(String uri) {
-        return "http://localhost:" + port + uri;
+    private String createURLWithPort() {
+        return "http://localhost:" + port + "/cars";
     }
 
     private static JSONObject constructCarPostRequestBody() throws JSONException {

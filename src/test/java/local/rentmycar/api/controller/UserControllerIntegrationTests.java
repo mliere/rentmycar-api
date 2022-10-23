@@ -1,9 +1,7 @@
 package local.rentmycar.api.controller;
 
 import local.rentmycar.api.ApiApplication;
-import local.rentmycar.api.domain.Car;
 import local.rentmycar.api.domain.User;
-import local.rentmycar.api.service.CarService;
 import local.rentmycar.api.service.UserService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,9 +40,9 @@ public class UserControllerIntegrationTests {
 
     }
 
-    TestRestTemplate restTemplate = new TestRestTemplate();
+    final TestRestTemplate restTemplate = new TestRestTemplate();
 
-    HttpHeaders headers = new HttpHeaders();
+    final HttpHeaders headers = new HttpHeaders();
 
     @Test
     public void post_User_ExpectUserDtoResultBody() throws JSONException {
@@ -56,14 +54,14 @@ public class UserControllerIntegrationTests {
         // build JSON body
         JSONObject requestBody = constructPostRequestBody();
 
-        String expected = "teststreet1";
+        String expected = "testList<Reservation> findByReservationStatus(ReservationStatus reservationStatus);street1";
 
         // assemble HTTP entity
         HttpEntity<String> entity = new HttpEntity<>(requestBody.toString(), headers);
 
         // act
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/users"),
+                createURLWithPort(),
                 HttpMethod.POST, entity, String.class
         );
 
@@ -86,7 +84,7 @@ public class UserControllerIntegrationTests {
 
         // act
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/users"),
+                createURLWithPort(),
                 HttpMethod.POST, entity, String.class
         );
 
@@ -108,7 +106,7 @@ public class UserControllerIntegrationTests {
 
         // act
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/users"),
+                createURLWithPort(),
                 HttpMethod.POST, entity, String.class
         );
 
@@ -123,20 +121,20 @@ public class UserControllerIntegrationTests {
 
         // act
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/users"),
+                createURLWithPort(),
                 HttpMethod.GET, entity, String.class);
 
         // assert
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
     @Test
-    public void get_AllUsers_ExpectHttpNoContent() throws JSONException {
+    public void get_AllUsers_ExpectHttpNoContent() {
         // arrange
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
         // act
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/users"),
+                createURLWithPort(),
                 HttpMethod.GET, entity, String.class);
 
         // assert
@@ -157,7 +155,7 @@ public class UserControllerIntegrationTests {
         requestBody.put("profilePicture", "string");
         return requestBody;
     }
-    private String createURLWithPort(String uri) {
-        return "http://localhost:" + port + uri;
+    private String createURLWithPort() {
+        return "http://localhost:" + port + "/users";
     }
 }
