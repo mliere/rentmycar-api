@@ -55,14 +55,19 @@ public class ReservationService implements ReservationServiceInterface {
     }
 
     @Override
-    public Reservation create(ReservationDto reservationDto) {
+    public Reservation create(ReservationDto reservationDto) throws MissingResourceException {
+
         Optional<Car> car = carRepository.findById(reservationDto.getCarId());
+        if (!car.isPresent()) { throw new MissingResourceException("car","" + reservationDto.getCarId()); }
+
         Optional<Renter> renter = renterRepository.findById(reservationDto.getRenterId());
+        if (!renter.isPresent()) { throw new MissingResourceException("renter","" + reservationDto.getCarId()); }
+
         Timeslot timeslot = timeslotRepository.save(modelMapper.map(reservationDto, Timeslot.class));
+
         Rating rating = ratingRepository.save(new Rating(reservationDto.getRating()));
 
         Reservation reservation = new Reservation(0,car.get(), renter.get(),timeslot,rating,ReservationStatus.PENDING);
-
         return reservationRepository.save(reservation);
     }
 

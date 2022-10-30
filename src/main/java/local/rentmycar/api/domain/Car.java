@@ -78,8 +78,4 @@ public class Car {
     @Column(name = "MAINTENANCE")
     @Getter @Setter
     private Double maintenance;
-
-
-
-
 }
