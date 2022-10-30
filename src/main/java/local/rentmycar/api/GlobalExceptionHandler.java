@@ -62,9 +62,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
-        body.put("status", HttpStatus.UNPROCESSABLE_ENTITY);
+        body.put("status", HttpStatus.CONFLICT);
         body.put("message:",ex.getMessage());
 
-        return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 }

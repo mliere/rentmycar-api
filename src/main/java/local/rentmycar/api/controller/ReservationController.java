@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class ReservationController {
     @Autowired
     private ModelMapper modelMapper;
-
     private final ReservationServiceInterface reservationService;
 
     @Autowired
@@ -56,6 +55,14 @@ public class ReservationController {
                 newReservation.getCarId(),
                 newReservation.getRenterId(),
                 newReservation.getRating());
+
+        // add custom mapping to flatten Reservation.timeslot to reservationDto
+        modelMapper.typeMap(Reservation.class, ReservationDto.class).addMappings(mapper -> {
+            mapper.map(src -> src.getTimeslot().getStartDate(),
+                    ReservationDto::setStartDate);
+            mapper.map(src -> src.getTimeslot().getEndDate(),
+                    ReservationDto::setEndDate);
+        });
 
         return new ResponseEntity<>(modelMapper.map(reservation, ReservationDto.class), HttpStatus.CREATED);
     }
