@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity @Table(name="CAR")
-@DynamicUpdate(true)
+@DynamicUpdate()
 @ToString
 public class Car {
     @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")

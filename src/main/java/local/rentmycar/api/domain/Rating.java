@@ -1,12 +1,11 @@
 package local.rentmycar.api.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity @Table(name="RATING")
+@AllArgsConstructor @NoArgsConstructor
 @ToString
 public class Rating {
     @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")

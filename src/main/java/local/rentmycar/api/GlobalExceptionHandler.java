@@ -1,6 +1,7 @@
 package local.rentmycar.api;
 
-import local.rentmycar.api.service.MissingResourceException;
+import local.rentmycar.api.service.Exceptions.MissingResourceException;
+import local.rentmycar.api.service.Exceptions.TimeslotReservedException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MissingResourceException.class)
     public final ResponseEntity<Object> handleMissingResourceException(
             MissingResourceException ex, WebRequest request) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", new Date());
+        body.put("status", HttpStatus.UNPROCESSABLE_ENTITY);
+        body.put("message:",ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+    @ExceptionHandler(TimeslotReservedException.class)
+    public final ResponseEntity<Object> handleTimeslotReservedException(
+            TimeslotReservedException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());

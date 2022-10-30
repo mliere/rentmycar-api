@@ -2,6 +2,7 @@ package local.rentmycar.api.controller;
 
 import local.rentmycar.api.controller.dto.ReservationDto;
 import local.rentmycar.api.domain.Reservation;
+import local.rentmycar.api.domain.Timeslot;
 import local.rentmycar.api.service.ReservationServiceInterface;
 import lombok.extern.java.Log;
 import org.modelmapper.ModelMapper;
@@ -51,12 +52,12 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<ReservationDto> create(@Valid @RequestBody ReservationDto newReservation) {
-        try {
-            Reservation reservation = reservationService.create(newReservation);
-            return new ResponseEntity<>(modelMapper.map(reservation, ReservationDto.class), HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        Reservation reservation = reservationService.create(modelMapper.map(newReservation, Timeslot.class),
+                newReservation.getCarId(),
+                newReservation.getRenterId(),
+                newReservation.getRating());
+
+        return new ResponseEntity<>(modelMapper.map(reservation, ReservationDto.class), HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")

@@ -1,4 +1,4 @@
-package local.rentmycar.api.service;
+package local.rentmycar.api.service.Exceptions;
 
 public class MissingResourceException extends RuntimeException {
 

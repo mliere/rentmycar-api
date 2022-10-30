@@ -1,13 +1,15 @@
 package local.rentmycar.api.service;
 
-import local.rentmycar.api.controller.dto.ReservationDto;
 import local.rentmycar.api.domain.*;
 import local.rentmycar.api.repository.*;
+import local.rentmycar.api.service.Exceptions.MissingResourceException;
+import local.rentmycar.api.service.Exceptions.TimeslotReservedException;
 import lombok.extern.java.Log;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +26,14 @@ public class ReservationService implements ReservationServiceInterface {
 
     @Autowired
     private ModelMapper modelMapper;
+
     @Autowired
     public ReservationService(
             ReservationRepository reservationRepository
             , CarRepository carRepository
             , RenterRepository renterRepository
             , TimeslotRepository timeslotRepository
-            , RatingRepository ratingRepository)
-    {
+            , RatingRepository ratingRepository) {
         this.reservationRepository = reservationRepository;
         this.carRepository = carRepository;
         this.renterRepository = renterRepository;
@@ -55,19 +57,27 @@ public class ReservationService implements ReservationServiceInterface {
     }
 
     @Override
-    public Reservation create(ReservationDto reservationDto) throws MissingResourceException {
+    public Reservation create(Timeslot timeslot, long carId, long renterId, int rating) throws MissingResourceException {
 
-        Optional<Car> car = carRepository.findById(reservationDto.getCarId());
-        if (!car.isPresent()) { throw new MissingResourceException("car","" + reservationDto.getCarId()); }
+        Optional<Car> car = carRepository.findById(carId);
+        if (car.isEmpty()) {
+            throw new MissingResourceException("car", "" + carId);
+        }
 
-        Optional<Renter> renter = renterRepository.findById(reservationDto.getRenterId());
-        if (!renter.isPresent()) { throw new MissingResourceException("renter","" + reservationDto.getCarId()); }
+        Optional<Renter> renter = renterRepository.findById(renterId);
+        if (renter.isEmpty()) {
+            throw new MissingResourceException("renter", "" + renterId);
+        }
 
-        Timeslot timeslot = timeslotRepository.save(modelMapper.map(reservationDto, Timeslot.class));
+        if (!timeslotFree(timeslot, car.get())) {
+            throw new TimeslotReservedException();
+        }
 
-        Rating rating = ratingRepository.save(new Rating(reservationDto.getRating()));
+        Timeslot reservedTimeslot = timeslotRepository.save(timeslot);
+        Rating storedRating = ratingRepository.save(new Rating(rating));
+        Reservation reservation = new Reservation(0, car.get(), renter.get(),
+                reservedTimeslot, storedRating, ReservationStatus.PENDING);
 
-        Reservation reservation = new Reservation(0,car.get(), renter.get(),timeslot,rating,ReservationStatus.PENDING);
         return reservationRepository.save(reservation);
     }
 
@@ -79,5 +89,28 @@ public class ReservationService implements ReservationServiceInterface {
     @Override
     public void delete(long id) {
         reservationRepository.deleteById(id);
+    }
+
+    private boolean timeslotFree(Timeslot timeslot, Car car) {
+        List<Reservation> reservations = reservationRepository.findByCar(car);
+
+        Timestamp s1 = timeslot.getStartDate();
+        Timestamp e1 = timeslot.getEndDate();
+        for (Reservation reservation : reservations) {
+
+            Timestamp s2 = reservation.getTimeslot().getStartDate();
+            Timestamp e2 = reservation.getTimeslot().getEndDate();
+
+            if (s1.before(s2) && e1.after(s2) ||
+                    s1.before(e2) && e1.after(e2) ||
+                    s1.before(s2) && e1.after(e2) ||
+                    s1.after(s2) && e1.before(e2) ||
+                    s1.equals(s2) ||
+                    e1.equals(e2)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
