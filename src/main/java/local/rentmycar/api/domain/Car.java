@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity @Table(name="CAR")
 @DynamicUpdate()
 @ToString
-public class Car {
+public class Car extends Vehicle {
     @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name="ID")
     @Getter @Setter
     private long id;
@@ -31,13 +31,13 @@ public class Car {
     @Getter @Setter
     private Timestamp roadWorthinessExpirationDate;
 
-    @Column(name="MODEL")
-    @Getter @Setter
-    private String model;
-
     @Column(name="LISTED")
     @Getter @Setter
     private Boolean listed;
+
+    @Column(name="MODEL")
+    @Getter @Setter
+    private String model;
 
     @Column(name="MANUFACTURING_DATE")
     @Getter @Setter
