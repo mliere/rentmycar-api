@@ -1,0 +1,7 @@
+create user returns 0 userId *
+create reservation returns null timeslot
+units tests for timeslotValidation
+no means to view available timeslots for car
+support images for user and car
+oauth
+ssl

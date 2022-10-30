@@ -61,12 +61,11 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public User create(User user) {
-        switch (user.getRole()) {
+        return switch (user.getRole()) {
             case "renter" -> renterRepository.save(modelMapper.map(user, Renter.class));
             case "owner" -> ownerRepository.save(modelMapper.map(user, Owner.class));
             default -> throw new IllegalArgumentException("Invalid role" + user.getRole());
-        }
-        return user;
+        };
     }
 
     @Override
