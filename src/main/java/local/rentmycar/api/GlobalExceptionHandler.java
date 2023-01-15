@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // ResponseEntityExceptionHandler is the default error handler for a lot of exceptions; see following link for the api docs
@@ -52,7 +49,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("status", HttpStatus.UNPROCESSABLE_ENTITY);
-        body.put("message:",ex.getMessage());
+
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+
+        body.put("errors:", errors);
 
         return new ResponseEntity<>(body, HttpStatus.UNPROCESSABLE_ENTITY);
     }
@@ -60,10 +61,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> handleTimeslotReservedException(
             TimeslotReservedException ex, WebRequest request) {
 
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
         body.put("status", HttpStatus.CONFLICT);
-        body.put("message:",ex.getMessage());
+        body.put("errors:",errors);
 
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }

@@ -52,6 +52,19 @@ public class CarController {
                 .orElseGet(() -> ResponseEntity.noContent().build());
     }
 
+    @GetMapping("owner/{id}")
+    public ResponseEntity<List<CarDto>> getCarsByOwner(@PathVariable Long id) {
+        log.info("Received get by owner request");
+        List<CarDto> result = carService.getByOwner(id)
+                .stream()
+                .map(car -> modelMapper.map(car, CarDto.class))
+                .collect(Collectors.toList());
+
+        if (result.isEmpty()) { return ResponseEntity.noContent().build(); }
+
+        return ResponseEntity.ok(result);
+    }
+
     @PutMapping("{id}")
     public ResponseEntity<CarDto> update(@PathVariable Long id, @Valid @RequestBody CarDto changedCar) {
             carService.update(id, modelMapper.map(changedCar, Car.class));

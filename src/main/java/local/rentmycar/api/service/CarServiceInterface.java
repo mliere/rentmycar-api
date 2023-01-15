@@ -11,6 +11,8 @@ public interface CarServiceInterface {
 
     Optional<Car> getById(long id);
 
+    List<Car> getByOwner(long id);
+
     Car create(Car car);
 
     @SuppressWarnings("UnusedReturnValue")

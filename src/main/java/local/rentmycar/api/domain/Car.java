@@ -19,9 +19,17 @@ public class Car extends Vehicle {
     @Getter @Setter
     private String licensePlateNumber;
 
-    @Lob @Column(name="PICTURE")
+    @Column(name="PICTURE")
     @Getter @Setter
-    private byte[] picture;
+    private String picture;
+
+    @Column(name="LAT")
+    @Getter @Setter
+    private String latitude;
+
+    @Column(name="LONG")
+    @Getter @Setter
+    private String longitude;
 
     @Column(name="DISTANCE_DRIVEN")
     @Getter @Setter

@@ -1,7 +1,10 @@
 package local.rentmycar.api.service;
 
 import local.rentmycar.api.domain.Car;
+import local.rentmycar.api.domain.Owner;
 import local.rentmycar.api.repository.CarRepository;
+import local.rentmycar.api.repository.OwnerRepository;
+import local.rentmycar.api.service.Exceptions.MissingResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +14,12 @@ import java.util.Optional;
 @Service
 public class CarService implements CarServiceInterface {
     private final CarRepository carRepository;
+    private final OwnerRepository ownerRepository;
 
     @Autowired
-    public CarService(CarRepository carRepository) {
+    public CarService(CarRepository carRepository, OwnerRepository ownerRepository) {
         this.carRepository = carRepository;
+        this.ownerRepository = ownerRepository;
     }
 
     @Override
@@ -30,6 +35,15 @@ public class CarService implements CarServiceInterface {
     @Override
     public Optional<Car> getById(long id) {
         return carRepository.findById(id);
+    }
+
+    @Override
+    public List<Car> getByOwner(long id) {
+        Optional<Owner> owner = ownerRepository.findById(id);
+        if (owner.isEmpty()) {
+            throw new MissingResourceException("owner", "" + id);
+        }
+        return carRepository.findByOwner(owner.get());
     }
 
     @Override

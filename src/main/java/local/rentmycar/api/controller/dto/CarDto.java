@@ -16,6 +16,9 @@ public class CarDto {
     private String model;
     private Boolean listed;
     private Timestamp manufacturingDate;
+    private String latitude;
+    private String longitude;
+    private String picture;
 
     @NotEmpty(message = "licensePlateNumber is mandatory")
     private String licensePlateNumber;
